@@ -22,8 +22,7 @@ class HashMap
   end
 
   def set(key, value)
-    index = hash(key) % capacity
-    list = buckets[index]
+    list = list(key)
     node = list.find(key)
 
     if node.nil?
@@ -43,5 +42,10 @@ class HashMap
 
   def capacity
     buckets.length
+  end
+
+  def list(key)
+    index = hash(key) % capacity
+    buckets[index]
   end
 end
