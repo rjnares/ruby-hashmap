@@ -43,6 +43,11 @@ class HashMap
     node.value
   end
 
+  def has?(key)
+    list = list(key)
+    list.contains?(key)
+  end
+
   private
 
   attr_reader :load_factor
