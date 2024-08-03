@@ -35,6 +35,18 @@ class LinkedList
     false
   end
 
+  def find(key)
+    current = head
+
+    until current.nil?
+      return current if current.key == key
+
+      current = current.link
+    end
+
+    nil
+  end
+
   def to_s
     node_strings = []
     current = head
