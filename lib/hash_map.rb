@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require_relative 'linked_list'
+
 # Class for a hash map of key,value pairs
 class HashMap
   attr_reader :length
 
   def initialize
-    @buckets = Array.new(16)
+    @buckets = Array.new(16) { LinkedList.new }
     @length = 0
     @load_factor = 0.75
   end
@@ -19,11 +21,27 @@ class HashMap
     hash_code
   end
 
+  def set(key, value)
+    index = hash(key) % capacity
+    list = buckets[index]
+    node = list.find(key)
+
+    if node.nil?
+      list.append(key, value)
+      self.length += 1
+      # TODO: implement grow functionality when length > capacity * load_factor
+    else
+      node.value = value
+    end
+  end
+
   private
 
   attr_reader :load_factor
+  attr_writer :length
+  attr_accessor :buckets
 
   def capacity
-    @buckets.length
+    buckets.length
   end
 end
