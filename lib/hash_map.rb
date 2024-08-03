@@ -34,6 +34,15 @@ class HashMap
     end
   end
 
+  def get(key)
+    list = list(key)
+    node = list.find(key)
+
+    return nil if node.nil?
+
+    node.value
+  end
+
   private
 
   attr_reader :load_factor
