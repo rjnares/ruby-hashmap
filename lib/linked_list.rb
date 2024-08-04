@@ -59,6 +59,11 @@ class LinkedList
     remove_link(previous)
   end
 
+  def clear
+    self.head = nil
+    self.length = 0
+  end
+
   def to_s
     node_strings = []
     current = head

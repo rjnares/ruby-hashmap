@@ -57,6 +57,11 @@ class HashMap
     value
   end
 
+  def clear
+    buckets.each(&:clear)
+    self.length = 0
+  end
+
   private
 
   attr_reader :load_factor
