@@ -77,6 +77,21 @@ class HashMap
     keys
   end
 
+  def values
+    values = []
+
+    buckets.each do |list|
+      current = list.head
+
+      until current.nil?
+        values << current.value
+        current = current.link
+      end
+    end
+
+    values
+  end
+
   private
 
   attr_reader :load_factor
