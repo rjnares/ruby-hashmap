@@ -28,15 +28,14 @@ class HashMap
     if node.nil?
       list.append(key, value)
       self.length += 1
-      # TODO: implement grow functionality when length > capacity * load_factor
+      resize if grow?
     else
       node.value = value
     end
   end
 
   def get(key)
-    list = list(key)
-    node = list.find(key)
+    node = list(key).find(key)
 
     return nil if node.nil?
 
@@ -44,13 +43,11 @@ class HashMap
   end
 
   def has?(key)
-    list = list(key)
-    list.contains?(key)
+    list(key).contains?(key)
   end
 
   def remove(key)
-    list = list(key)
-    value = list.remove(key)
+    value = list(key).remove(key)
 
     self.length -= 1 unless value.nil?
 
@@ -107,18 +104,37 @@ class HashMap
     entries
   end
 
+  def print
+    buckets.each_with_index { |list, index| puts "#{index}: #{list}" }
+  end
+
   private
 
   attr_reader :load_factor
   attr_writer :length
   attr_accessor :buckets
 
-  def capacity
-    buckets.length
+  def list(key)
+    index = hash(key) % buckets.length
+    buckets[index]
   end
 
-  def list(key)
-    index = hash(key) % capacity
-    buckets[index]
+  def grow?
+    length > buckets.length * load_factor
+  end
+
+  def resize
+    old_buckets = buckets
+    self.buckets = Array.new(buckets.length * 2) { LinkedList.new }
+    self.length = 0
+
+    old_buckets.each do |list|
+      current = list.head
+
+      until current.nil?
+        set(current.key, current.value)
+        current = current.link
+      end
+    end
   end
 end
