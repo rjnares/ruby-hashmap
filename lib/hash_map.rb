@@ -92,6 +92,21 @@ class HashMap
     values
   end
 
+  def entries
+    entries = []
+
+    buckets.each do |list|
+      current = list.head
+
+      until current.nil?
+        entries << [current.key, current.value]
+        current = current.link
+      end
+    end
+
+    entries
+  end
+
   private
 
   attr_reader :load_factor
