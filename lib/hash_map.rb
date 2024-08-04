@@ -48,6 +48,15 @@ class HashMap
     list.contains?(key)
   end
 
+  def remove(key)
+    list = list(key)
+    value = list.remove(key)
+
+    self.length -= 1 unless value.nil?
+
+    value
+  end
+
   private
 
   attr_reader :load_factor

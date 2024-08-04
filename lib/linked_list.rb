@@ -47,6 +47,18 @@ class LinkedList
     nil
   end
 
+  def remove(key)
+    previous = Node.new(nil, nil, head)
+
+    until previous.link.nil?
+      break if previous.link.key == key
+
+      previous = previous.link
+    end
+
+    remove_link(previous)
+  end
+
   def to_s
     node_strings = []
     current = head
@@ -63,4 +75,16 @@ class LinkedList
   private
 
   attr_accessor :length
+
+  def remove_link(previous)
+    return nil if previous.nil? || previous.link.nil?
+
+    node_to_remove = previous.link
+    previous.link = node_to_remove.link
+    self.length -= 1
+
+    self.head = node_to_remove.link if head == node_to_remove
+
+    node_to_remove.value
+  end
 end
