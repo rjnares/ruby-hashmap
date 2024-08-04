@@ -62,6 +62,21 @@ class HashMap
     self.length = 0
   end
 
+  def keys
+    keys = []
+
+    buckets.each do |list|
+      current = list.head
+
+      until current.nil?
+        keys << current.key
+        current = current.link
+      end
+    end
+
+    keys
+  end
+
   private
 
   attr_reader :load_factor

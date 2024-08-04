@@ -4,7 +4,7 @@ require_relative 'node'
 
 # Class for a linked list of nodes
 class LinkedList
-  attr_accessor :head
+  attr_reader :head
 
   def initialize
     @head = nil
@@ -79,6 +79,7 @@ class LinkedList
 
   private
 
+  attr_writer :head
   attr_accessor :length
 
   def remove_link(previous)
